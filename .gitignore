@@ -1,0 +1,5 @@
+# exclude everything except directory Alhawawreh/IIoT_testbed
+
+# exclude everything in directory Alhawawreh/IIoT_testbed
+
+*.rar
