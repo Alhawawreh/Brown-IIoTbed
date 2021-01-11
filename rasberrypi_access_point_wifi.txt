@@ -1,0 +1,82 @@
+################Rasberry pi 3 b+ as access point wifi 
+
+
+###########installl hostapd and dnsmasq
+#hostapd (host access point daemon) is a user space daemon software enabling a network interface card to act as an access point and authentication server.
+#dnsmasq is free software providing Domain Name System (DNS) caching, a Dynamic Host Configuration Protocol (DHCP) server, router advertisement and network boot features, intended for small computer networks
+
+
+1. sudo apt-get install dnsmasq hostapd
+2. turn the instaled software off whilst we edit the configuration files
+     1. sudo systemstl stop dnsmasq
+	 2. sudo systemctl stop hostapd 
+	 
+	 
+#### configure the interface and  IP subnet network, we choose 172.24.1.1/24 
+sudo nano /etc/dhcpcd.conf
+
+ interface wlan0
+ static ip_address = 172.24.1.1/24
+ 
+###restart the dhcpcd service to take the new configuration 
+ 
+ sudo service dhcpcd restart 
+ 
+ 
+ 
+ ###################### now we will configure dnsmasq
+ 
+ before start update the configuation file, let us save the orignal one by moving it and changing its name 
+ 
+ 1. sudo mv  /etc/dnsmasq.conf   /etc/dnsmasq.conf.orig
+ 2. sudo nano /etc/dnsmasq.conf     ## update the conf file
+ 
+ interface =wlan0
+ domain-needed   #####domain-needed Tells dnsmasq to never forward A or AAAA queries for plain names, without dots or domain parts. 
+ dhcp-range =  172.24.1.2, 172.24.1.255, 24h #defines a range of  available address leases, with a lease time of 24 hours
+
+ 
+########################## configure hostapd.conf for our access_point 
+
+1. sudo nano /etc/hostapd.conf    ###open the configuation file and write the following 
+
+interface = wlan0   ###define interface name 
+hw_mode = g         ### "g" simply means 2.4GHz band
+channel = 6         ### the channel to use
+macaddr_acl = 0     #### # Accept all MAC addresses
+country_code= AU     #######Australia for us
+auth_algs = 3                ###### 1=wpa, 2=wep, 3=both
+ignore_broadcast_ssid =0      ##### Disable this to insure the access point is visible
+wpa =3
+wpa_key_mgmt =WPA_PSK
+wpa_pairwise =TKIP
+rsn_pairwise =CCMP
+ssid= raspberry pi   ##### define the name of wi-if network 
+wpa_passphrase = muna2@2@2    ###### define the passowd
+
+
+##############################configure rc.local  to make the hotspot/access point activate on startup and after reboot
+
+
+at the end of file (rc.loacl) before exit 0 , we write the following setence 
+ sudo nano /etc/rc.local 
+
+service hostapd stop 
+sleep 5
+service hostapd start 
+exit 0 
+
+
+#################################### configure hostapd to start as a service 
+
+sudo nano /etc/default/hostapd 
+
+  DAEMON_CONF = "/etc/hostapd/hostapd.conf"
+  
+  
+#################### rsstart all the instal;ed service again and reboot the device 
+
+sudo systemctl start hostapd
+sudo systemctl start dnsmasq
+
+sudo reboot 
