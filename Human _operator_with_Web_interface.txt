@@ -1,0 +1,38 @@
+To mimic Human users/operators over websocket, we use iMacro software for google chrome. 
+
+
+
+iMacros for Chrome 
+
+
+https://chrome.google.com/webstore/detail/imacros-for-chrome/cplklnmnlbnpmjogncfgfijoopmnlemp?hl=en
+
+
+
+
+
+Then copy and paste the following code. This code can be changed to fit the behavior that user need to perform. 
+It simulates the huamn behavior ( usaully human behaves with a little  randominess)
+
+
+
+
+1	VERSION BUILD=1005 RECORDER=CR
+2	URL GOTO=http://192.168.2.10:1880/ui/#/0
+3	SET !VAR1 EVAL (" var randomNumber=Math.floor(math.random()*25+1); randomNumber; ")
+4	SET !VAR2 EVAL (" var randomNumber=Math.floor(math.random()*30+1); randomNumber; ")
+5	WAIT seconds = {{!var1}}
+6	REFRESH
+7	TAG POS=1 TYPE=MD-SWITCH ATTR=TXT:
+8	TAG POS=2 TYPE=DIV ATTR=CLASS:md-container
+9	WAIT seconds = {{!var1}}
+10	TAG POS=3 TYPE=DIV ATTR=CLASS:md-container
+11	WAIT seconds = {{!var1}}
+12	TAG POS=4 TYPE=DIV ATTR=CLASS:md-container
+13	TAG POS=3 TYPE=MD-SWITCH ATTR=TXT:
+14	WAIT seconds = {{!var2}}
+15	RE
+
+
+
+
