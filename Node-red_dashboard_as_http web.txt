@@ -1,0 +1,45 @@
+# Instruction for using NODE RED/DASHBOARD  AS HTTP  web site .....
+
+
+
+
+
+###install apache2 raspberry pi 
+ sudo apt install apache2 -y
+
+
+###configure web server to use node-red dahboard 
+
+1. open file /etc/apache2/sites-enabled/000-deafault.conf
+sudo nano /etc/apache2/sites-enabled/000-deafault.conf
+
+2. write on it the following 
+
+
+Server Name localhost 
+
+RewriteEngine on 
+RewriteCond %{HTTP:Upgrade}=websocket [NC]
+RewriteRule / (.*)   ws://127.0.0.1:1880/ 1 [P,L]
+ProxyPreserveHost     on
+ProxyRequest     off
+ProxyPass   /http://127.0.0.1:1880/
+ProxyPassReserver  /http://127.0.0.1:1880/
+
+
+
+
+########= add server name at hhtpd.conf
+
+
+sudo nano/etc/apache2/httpd.conf
+
+
+
+#### restart apcahe2 
+
+
+sudo /etc/init.d/apache2  restart 
+
+
+
