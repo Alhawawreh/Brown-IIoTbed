@@ -19,6 +19,7 @@ The paper "Developing a Security Testbed for Industrial Internet of Things"  mus
 ![testbedarch](https://user-images.githubusercontent.com/39436143/153318901-075888ae-a508-4b6a-aa55-780d6ee7817f.png)
 
 ![scada](https://user-images.githubusercontent.com/39436143/153317319-1556d33b-b8fe-4a66-a072-5514690b0b2f.png)
+
 ![phototest (1)](https://user-images.githubusercontent.com/39436143/153317338-36a9f3f9-d0ea-459d-b469-501d58c6a436.png)
 
 ![modbusfig](https://user-images.githubusercontent.com/39436143/153317439-ee540f0e-2a9f-4f5c-8c7c-2f3d25982294.png)
